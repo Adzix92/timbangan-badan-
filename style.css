@@ -2,7 +2,7 @@ body{
     background-color: rgb(23, 23, 124);
     background: linear-gradient(270deg, #0f172a, #0284c7, #38bdf8, #0f172a);
     background-size: 400% 400%;
-    animation: gradientMove 10s ease infinite;
+
 }
 @keyframes gradientMove {
     0% { background-position: 0% 50%; }
