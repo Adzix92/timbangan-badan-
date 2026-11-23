@@ -1,69 +1,226 @@
-body{
-    background-color: rgb(23, 23, 124);
-    background: linear-gradient(270deg, #0f172a, #0284c7, #38bdf8, #0f172a);
-    background-size: 400% 400%;
-
+/* ============ TEMA WINTER - KALKULATOR BMI ============ */
+:root{
+    --es: #bae6fd;
+    --es-terang: #e0f2fe;
+    --biru: #0c4a6e;
+    --biru-terang: #0284c7;
+    --perak: #cbd5e1;
+    --malam: #071b33;
 }
-@keyframes gradientMove {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
 
-}
 *{
+    box-sizing: border-box;
     color: #ffffff;
+}
+
+body{
+    margin: 0;
+    min-height: 100vh;
+    padding: 24px 16px 40px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--malam);
+    background-image:
+        radial-gradient(circle at 15% 20%, rgba(224,242,254,.85) 0 1.5px, transparent 2px),
+        radial-gradient(circle at 70% 40%, rgba(224,242,254,.6) 0 1px, transparent 1.5px),
+        linear-gradient(165deg, #071b33 0%, #0c4a6e 45%, #164e63 70%, #0f172a 100%);
+    background-size: 130px 130px, 200px 200px, 100% 100%;
+    animation: langitWinter 18s linear infinite;
+    overflow-x: hidden;
+}
+
+@keyframes langitWinter{
+    from { background-position: 0 0, 0 0, 0 0; }
+    to   { background-position: -65px 130px, 50px 200px, 0 0; }
+}
+
+/* Hiasan salju yang jatuh */
+.salju{
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.salju::before,
+.salju::after{
+    content: "";
+    position: absolute;
+    top: -100vh;
+    left: 0;
+    width: 100%;
+    height: 200vh;
+    background-image:
+        radial-gradient(circle, #fff 2px, transparent 2.5px),
+        radial-gradient(circle, var(--es) 1.5px, transparent 2px);
+    background-size: 150px 150px, 230px 230px;
+    background-position: 0 0, 70px 50px;
+    opacity: .8;
+    animation: jatuhSalju 20s linear infinite;
+}
+
+.salju::after{
+    background-size: 210px 210px, 320px 320px;
+    opacity: .45;
+    animation-duration: 28s;
+    animation-delay: -10s;
+}
+
+@keyframes jatuhSalju{
+    to { transform: translateY(100vh); }
+}
+
+/* Konten tetap di atas hiasan salju */
+body > *:not(.salju){
+    position: relative;
+    z-index: 1;
 }
 
 h1{
     text-align: center;
     font-size: 36px;
-    margin-bottom: 15px;
-}
-input,select {
-    max-width: 400px; /* MEMBATASI LEBAR: Biar gak melebar ke samping layar */
-    width: 100%;       /* Biar tetap responsif di layar HP */
-    margin: 40px auto; /* BIKIN KE TENGAH: Atas-bawah 40px, Kiri-kanan Otomatis Tengah */
-    
-    padding: 24px;
-    background-color: #1e293b; /* Warna latar belakang kartu (opsional) */
-    border-radius: 12px;       /* Sudut melengkung */
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3); /* Bayangan halus */
+    margin: 10px 0;
+    color: var(--es);
+    text-shadow: 0 0 18px rgba(186,230,253,.85), 0 2px 0 rgba(255,255,255,.4);
 }
 
-/* Efek pas input lagi diklik/fokus */
-input:focus, select:focus {
-    border-color: #38bdf8;
-    box-shadow: 0 0 8px rgba(56, 189, 248, 0.4);
+.sub-winter{
+    text-align: center;
+    color: var(--es-terang);
+    letter-spacing: 2px;
+    margin-top: 0;
 }
 
-/* 5. TOMBOL CEK */
-button {
-    display: block;
-    width: 30%;
-    padding: 12px;
-    border-radius: 12px;
-    border: none;
-    background: #0284c7;
-    color: white;
+/* Sedikit pohon cemara di bagian atas */
+.pohon{
+    text-align: center;
+    margin: 0 0 12px;
+    font-size: 22px;
+    letter-spacing: 8px;
+    opacity: .9;
+    filter: drop-shadow(0 0 8px rgba(186,230,253,.6));
+    animation: ayunPohon 4s ease-in-out infinite;
+}
+
+@keyframes ayunPohon{
+    0%, 100% { transform: rotate(-1.5deg); }
+    50%      { transform: rotate(1.5deg); }
+}
+
+h2{
+    text-align: center;
+    max-width: 640px;
+    margin: 0 auto 18px;
+    font-weight: 400;
     font-size: 16px;
-    font-weight: 300;
+    color: var(--es-terang);
+}
+
+input,
+select{
+    display: block;
+    max-width: 400px;
+    width: 100%;
+    margin: 18px auto;
+    padding: 16px 20px;
+    border: 1px solid rgba(224,242,254,.55);
+    border-radius: 14px;
+    background: rgba(255,255,255,.1);
+    backdrop-filter: blur(8px);
+    color: #ffffff;
+    font-size: 16px;
+    box-shadow: 0 6px 24px rgba(0,0,0,.28), inset 0 1px 0 rgba(255,255,255,.25);
+}
+
+input::placeholder{
+    color: rgba(224,242,254,.75);
+}
+
+input:focus,
+select:focus{
+    outline: none;
+    border-color: var(--es);
+    box-shadow: 0 0 16px rgba(186,230,253,.6), inset 0 1px 0 rgba(255,255,255,.3);
+}
+
+select option{
+    background: var(--biru);
+    color: #ffffff;
+}
+
+button{
+    display: block;
+    width: min(300px, 80%);
+    margin: 24px auto;
+    padding: 14px;
+    border: 1px solid rgba(224,242,254,.7);
+    border-radius: 999px;
+    background: linear-gradient(135deg, #075985, #0284c7 50%, #7dd3fc);
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 1px;
     cursor: pointer;
-    transition: background 0.3s ease, transform 0.1s ease;
-    margin: auto;
+    box-shadow: 0 8px 28px rgba(2,132,199,.5);
+    transition: transform .15s ease, box-shadow .3s ease, filter .3s ease;
 }
 
-/* Efek pas tombol di-hover kursor */
-button:hover {
-    background: #0369a1;
-    transform: scale(1.05);
+button:hover{
+    transform: translateY(-3px) scale(1.03);
+    filter: brightness(1.12);
+    box-shadow: 0 10px 32px rgba(186,230,253,.6);
 }
 
-button:active {
-    transform: scale(0.98);
+button:active{
+    transform: translateY(0) scale(.98);
 }
 
-footer {
-    margin-top: 25px;
-    font-size: 12px;
-    color: #94a3b8;
+#list{
+    max-width: 640px;
+    min-height: 60px;
+    margin: 24px auto;
+    padding: 20px;
+    border: 1px solid rgba(224,242,254,.5);
+    border-radius: 18px;
+    background: rgba(255,255,255,.1);
+    backdrop-filter: blur(10px);
+    text-align: center;
+    font-size: 18px;
+    line-height: 1.7;
+    box-shadow: 0 8px 30px rgba(0,0,0,.25), inset 0 1px 0 rgba(255,255,255,.25);
+}
+
+h3, h4, h5{
+    text-align: center;
+}
+
+h3{
+    color: var(--perak);
+    font-size: 16px;
+    font-weight: 400;
+}
+
+h4{
+    color: var(--es);
+    letter-spacing: 1px;
+}
+
+h5{
+    color: var(--es-terang);
+    font-size: 13px;
+    font-weight: 400;
+}
+
+footer{
+    display: block;
+    text-align: center;
+    margin-top: 32px;
+    font-size: 14px;
+    color: var(--es);
+}
+
+@media (prefers-reduced-motion: reduce){
+    body, .salju::before, .salju::after, .pohon{
+        animation: none;
+    }
 }
